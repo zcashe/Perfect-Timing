@@ -46,12 +46,13 @@ struct Countdown: View {
     @State private var home = false
     @State var coloring = CustomColor.countdown_blue
     
+    @State var stop = false
+    @State var resume = false
     
     
     
-    
-    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-    
+    @State var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    @State var flip = false
     
     
     var body: some View {
@@ -74,7 +75,13 @@ struct Countdown: View {
                     
                         .onReceive(timer){ _ in
                             if self.timeRemaining > 0 {
-                                self.timeRemaining -= 1
+                                
+                                if stop{
+                                    self.timeRemaining -= 0}
+                                else{
+                                    self.timeRemaining -= 1
+
+                                }
                             }
                             else{
                                 
@@ -102,15 +109,32 @@ struct Countdown: View {
                     
                     // End Timer
                     
-                    
-                    
-                    Button("  Pause     ") {
+                    // Pause and Unpause
+                    if flip != true{
+                        Button("  Pause     ") {
+                            stop = true
+                            flip = true
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .font(.title2)
+                        .tint(CustomColor.blue_cancel)
+                        .offset(x:0,y:100)
+                        
                     }
-                    .buttonStyle(.borderedProminent)
-                    .font(.title2)
-                    .tint(CustomColor.blue_cancel)
+                            else{
+                            Button("  Resume     ") {
+                                stop = false
+                                flip = false
+                            }
+                            .buttonStyle(.borderedProminent)
+                            .font(.title2)
+                            .tint(CustomColor.blue_cancel)
+                            .offset(x:0,y:100)
+                            
+                        }
+                    // End Pause and unpause
                     
-                    .offset(x:0,y:100)
+                    
                     Button("  Cancel    ") {
                         home = true
                     }
