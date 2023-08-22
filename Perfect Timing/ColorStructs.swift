@@ -2,7 +2,7 @@
 //  ColorStructs.swift
 //  Perfect Timing
 //
-//  Created by Zac Elders on 8/12/23.
+//  Created by ZCashe on 8/12/23.
 //
 
 import Foundation
